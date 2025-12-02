@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace UI
 {
@@ -6,11 +8,8 @@ namespace UI
     public sealed class TestData
     {
         public string name = "file";
-        public int[,] numbers;
-
-        public TestData(int[,] numbers)
-        {
-            this.numbers = numbers;
-        }
+        public int rows;
+        public int cols;
+        public int[] numbers; // flattened
     }
 }
