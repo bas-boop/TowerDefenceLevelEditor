@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -15,13 +14,13 @@ namespace UI
             TestData data = new ()
             {
                 rows = 3,
-                cols = 3,
-                numbers = new int[9]
+                cols = 3
             };
+            data.numbers = new int[data.rows * data.cols];
 
-            for (int i = 0; i < 3; i++)
-                for (int j = 0; j < 3; j++)
-                    data.numbers[i * 3 + j] = Convert.ToInt32(inputFields[i * 3 + j].text);
+            for (int i = 0; i < data.rows; i++)
+                for (int j = 0; j < data.cols; j++)
+                    data.numbers[i * data.rows + j] = Convert.ToInt32(inputFields[i * data.rows + j].text);
 
             return data;
         }
@@ -29,9 +28,7 @@ namespace UI
         public void SetData(TestData data)
         {
             for (int i = 0; i < data.numbers.Length; i++)
-            {
                 inputFields[i].text = data.numbers[i].ToString();
-            }
         }
     }
 }

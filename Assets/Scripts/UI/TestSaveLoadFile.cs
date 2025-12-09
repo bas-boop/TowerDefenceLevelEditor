@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using System.IO;
 using SFB;
 using UnityEngine.Events;
@@ -17,13 +16,13 @@ namespace UI
         {
             string[] filePaths = StandaloneFileBrowser.OpenFilePanel("Open File", "", "json", false);
 
-            if (filePaths == null || filePaths.Length == 0)
+            if (filePaths == null
+                || filePaths.Length == 0)
                 return;
 
             string json = File.ReadAllText(filePaths[0]);
-            Debug.Log($"Loaded JSON:\n{json}");
-
             TestData loadedJson = JsonUtility.FromJson<TestData>(json);
+
             onLoad?.Invoke(loadedJson);
         }
 
@@ -35,21 +34,8 @@ namespace UI
                 return;
 
             TestData data = fileEditor.GetData();
-            Debug.Log(data.numbers);
-
-            string debug = null;
-            for (int i = 0; i < data.rows; i++)
-            {
-                for (int j = 0; j < data.cols; j++)
-                {
-                    debug += $" {data.numbers[i * j]}";
-                }
-            }
-
-            Debug.Log(debug);
-            
             string json = JsonUtility.ToJson(data, true);
-            Debug.Log(json);
+            
             File.WriteAllText(filePath, json);
 
             onSave?.Invoke(data);
