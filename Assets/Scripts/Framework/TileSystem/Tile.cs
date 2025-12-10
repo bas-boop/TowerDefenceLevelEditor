@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 
-using Framework;
-
-namespace UI
+namespace Framework.TileSystem
 {
     public sealed class Tile : MonoBehaviour
     {
