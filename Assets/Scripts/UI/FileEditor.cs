@@ -16,19 +16,19 @@ namespace UI
                 rows = 3,
                 cols = 3
             };
-            data.numbers = new int[data.rows * data.cols];
+            data.tileId = new string[data.rows * data.cols];
 
             for (int i = 0; i < data.rows; i++)
                 for (int j = 0; j < data.cols; j++)
-                    data.numbers[i * data.rows + j] = Convert.ToInt32(inputFields[i * data.rows + j].text);
+                    data.tileId[i * data.rows + j] = inputFields[i * data.rows + j].text;
 
             return data;
         }
 
         public void SetData(TestData data)
         {
-            for (int i = 0; i < data.numbers.Length; i++)
-                inputFields[i].text = data.numbers[i].ToString();
+            for (int i = 0; i < data.tileId.Length; i++)
+                inputFields[i].text = data.tileId[i].ToString();
         }
     }
 }

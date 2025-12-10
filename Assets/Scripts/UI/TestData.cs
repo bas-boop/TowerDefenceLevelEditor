@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace UI
 {
@@ -10,6 +11,6 @@ namespace UI
         public string name = "file";
         public int rows;
         public int cols;
-        public int[] numbers; // flattened
+        public string[] tileId;
     }
 }
