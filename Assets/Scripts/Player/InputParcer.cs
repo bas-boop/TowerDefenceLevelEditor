@@ -18,13 +18,16 @@ namespace Player
             Init();
         }
 
+        private void Update()
+        {
+            float scrollInput = _inputActionAsset["Scroll"].ReadValue<float>();
+            cameraController.Zoom(-scrollInput);
+        }
+
         private void FixedUpdate()
         {
             Vector2 moveInput = _inputActionAsset["Move"].ReadValue<Vector2>();
             cameraController.Move(moveInput);
-            
-            float scrollInput = _inputActionAsset["Scroll"].ReadValue<float>();
-            cameraController.Zoom(-scrollInput);
         }
 
         private void OnEnable() => AddListeners();

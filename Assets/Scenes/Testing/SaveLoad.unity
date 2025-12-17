@@ -1456,11 +1456,11 @@ MonoBehaviour:
       - m_Target: {fileID: 595814325}
         m_TargetAssemblyTypeName: Framework.ToolData, Assembly-CSharp
         m_MethodName: SetSelectedTileId
-        m_Mode: 5
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: Grass
           m_BoolArgument: 0
@@ -1583,7 +1583,8 @@ MonoBehaviour:
     name: 
     rows: 0
     cols: 0
-    tileId: []
+    tileId: 
+  tileMap: {fileID: 1206490565}
   inputFields:
   - {fileID: 2117336340}
   - {fileID: 1561921468}
@@ -4370,11 +4371,11 @@ MonoBehaviour:
       - m_Target: {fileID: 595814325}
         m_TargetAssemblyTypeName: Framework.ToolData, Assembly-CSharp
         m_MethodName: SetSelectedTileId
-        m_Mode: 5
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 2
           m_FloatArgument: 0
           m_StringArgument: Path
           m_BoolArgument: 0
@@ -5029,7 +5030,7 @@ MonoBehaviour:
       - m_Target: {fileID: 595814325}
         m_TargetAssemblyTypeName: Framework.ToolData, Assembly-CSharp
         m_MethodName: SetSelectedTileId
-        m_Mode: 5
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -5340,11 +5341,11 @@ MonoBehaviour:
       - m_Target: {fileID: 595814325}
         m_TargetAssemblyTypeName: Framework.ToolData, Assembly-CSharp
         m_MethodName: SetSelectedTileId
-        m_Mode: 5
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 4
           m_FloatArgument: 0
           m_StringArgument: End
           m_BoolArgument: 0
@@ -6350,7 +6351,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0
+  near clip plane: -1000
   far clip plane: 1000
   field of view: 60
   orthographic: 1
@@ -6379,7 +6380,7 @@ Transform:
   m_GameObject: {fileID: 1835424256}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: 5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6968,11 +6969,11 @@ MonoBehaviour:
       - m_Target: {fileID: 595814325}
         m_TargetAssemblyTypeName: Framework.ToolData, Assembly-CSharp
         m_MethodName: SetSelectedTileId
-        m_Mode: 5
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 3
           m_FloatArgument: 0
           m_StringArgument: Start
           m_BoolArgument: 0

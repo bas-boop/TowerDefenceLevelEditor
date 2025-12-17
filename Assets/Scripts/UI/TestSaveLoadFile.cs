@@ -1,7 +1,13 @@
-﻿using UnityEngine;
+﻿// standard
 using System.IO;
-using SFB;
+using UnityEngine;
 using UnityEngine.Events;
+
+// third party
+using SFB;
+
+// mine
+using Framework.TileSystem;
 
 namespace UI
 {
@@ -9,8 +15,8 @@ namespace UI
     {
         [SerializeField] private FileEditor fileEditor;
 
-        [SerializeField] private UnityEvent<TestData> onLoad;
-        [SerializeField] private UnityEvent<TestData> onSave;
+        [SerializeField] private UnityEvent<TilemapData> onLoad;
+        [SerializeField] private UnityEvent<TilemapData> onSave;
 
         public void LoadFile()
         {
@@ -21,8 +27,8 @@ namespace UI
                 return;
 
             string json = File.ReadAllText(filePaths[0]);
-            TestData loadedJson = JsonUtility.FromJson<TestData>(json);
-
+            TilemapData loadedJson = JsonUtility.FromJson<TilemapData>(json);
+            
             onLoad?.Invoke(loadedJson);
         }
 
@@ -33,7 +39,7 @@ namespace UI
             if (string.IsNullOrEmpty(filePath))
                 return;
 
-            TestData data = fileEditor.GetData();
+            TilemapData data = fileEditor.GetData();
             string json = JsonUtility.ToJson(data, true);
             
             File.WriteAllText(filePath, json);

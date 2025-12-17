@@ -6,8 +6,8 @@ namespace Framework.TileSystem
     {
         [SerializeField] private SpriteRenderer spriteRenderer;
 
-        private string _id;
-        
+        private int _id;
+
         private void OnMouseEnter() { }
 
         private void OnMouseExit() { }
@@ -18,18 +18,38 @@ namespace Framework.TileSystem
                 DoDrag();
         }
 
-        private void DoDrag()
+        public void SetTileId(int id)
         {
-            _id = ToolData.Instance.SelectedTileId;
-            spriteRenderer.color = _id switch
+            _id = id;
+            
+            //todo: fix hardcoded id's with tile name
+            string a = _id switch
+            {
+                0 => "Empty",
+                1 => "Grass",
+                2 => "Path",
+                3 => "Start",
+                4 => "End",
+                _ => "Empty"
+            };
+            
+            spriteRenderer.color = a switch
             {
                 "Empty" => ColorArray.GetColor(0),
                 "Grass" => ColorArray.GetColor(1),
                 "Path" => ColorArray.GetColor(2),
                 "Start" => ColorArray.GetColor(3),
                 "End" => ColorArray.GetColor(4),
-                _ => spriteRenderer.color
+                _ => Color.black
             };
+        }
+
+        public int GetId() => _id;
+        
+        private void DoDrag()
+        {
+            _id = ToolData.Instance.SelectedTileId;
+            SetTileId(_id);
         }
     }
 }

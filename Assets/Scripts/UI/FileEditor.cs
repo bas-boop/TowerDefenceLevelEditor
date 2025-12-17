@@ -1,34 +1,36 @@
-﻿using System;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
+
+using Framework.TileSystem;
 
 namespace UI
 {
     public sealed class FileEditor : MonoBehaviour
     {
-        [SerializeField] private TestData testData;
+        [SerializeField] private TilemapData tilemapData;
+        [SerializeField] private TileMap tileMap;
         [SerializeField] private TMP_InputField[] inputFields;
 
-        public TestData GetData()
+        public TilemapData GetData()
         {
-            TestData data = new ()
+            TilemapData data = new ()
             {
-                rows = 3,
-                cols = 3
+                //todo fix hardcode numbers
+                rows = 5,
+                cols = 5
             };
-            data.tileId = new string[data.rows * data.cols];
-
+            data.tileId = new int[data.rows * data.cols];
+            
             for (int i = 0; i < data.rows; i++)
                 for (int j = 0; j < data.cols; j++)
-                    data.tileId[i * data.rows + j] = inputFields[i * data.rows + j].text;
+                    data.tileId[i * data.rows + j] = tileMap.GetTiles()[i * data.rows + j].GetId();
 
             return data;
         }
 
-        public void SetData(TestData data)
+        public void SetData(TilemapData data)
         {
-            for (int i = 0; i < data.tileId.Length; i++)
-                inputFields[i].text = data.tileId[i].ToString();
+            tileMap.CreateNewMap(data);
         }
     }
 }
