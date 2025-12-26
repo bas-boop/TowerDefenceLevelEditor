@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using Framework.TileSystem;
+﻿using System.Collections.Generic;
 using UnityEngine;
+
+using Framework.TileSystem;
 
 namespace Player
 {
@@ -32,10 +32,17 @@ namespace Player
                 b.Encapsulate(t.transform.position);
 
             transform.position = b.center;
+            Zoom(tileMap.GetBiggestSide(), true);
         }
 
-        public void Zoom(float scroll)
+        public void Zoom(float scroll, bool isRest = false)
         {
+            if (isRest)
+            {
+                _camera.orthographicSize = scroll;
+                return;
+            }
+            
             _camera.orthographicSize += scroll;
             
             if (_camera.orthographicSize <= 1)

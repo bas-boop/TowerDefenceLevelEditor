@@ -10,19 +10,62 @@ namespace Framework.TileSystem
 
         private List<Tile> _tiles = new();
 
-        private void Awake()
-        {
-            InitTileMap(null);
-        }
+        private void Awake() => InitTileMap(null);
 
         public List<Tile> GetTiles() => _tiles;
+
+        public TilemapData GetData()
+        {
+            TilemapData data = new ()
+            {
+                rows = size.x,
+                cols = size.y
+            };
+            
+            data.tileId = new int[data.rows * data.cols];
+            
+            for (int i = 0; i < data.rows; i++)
+            for (int j = 0; j < data.cols; j++)
+            {
+                if (i * data.rows + j >= _tiles.Count)
+                    continue;
+                
+                data.tileId[i * data.rows + j] = _tiles[i * data.rows + j].GetId();
+            }
+
+            return data;
+        }
 
         public void CreateNewMap(TilemapData data)
         {
             size = new (data.rows, data.cols);
             InitTileMap(data);
         }
-        
+
+        public void SetHeight(string input)
+        {
+            int.TryParse(input, out int height);
+            
+            if (height <= 0)
+                return;
+            
+            size = new (size.x, height);
+            CreateNewMap(GetData());
+        }
+
+        public void SetWidth(string input)
+        {
+            int.TryParse(input, out int width);
+            
+            if (width <= 0)
+                return;
+            
+            size = new (width, size.y);
+            CreateNewMap(GetData());
+        }
+
+        public int GetBiggestSide() => size.x >= size.y ? size.x : size.y;
+
         private void InitTileMap(TilemapData? data)
         {
             for (int i = transform.childCount - 1; i >= 0; i--)
@@ -37,9 +80,7 @@ namespace Framework.TileSystem
                 int y = i / size.x;
                 
                 _tiles.Add(CreateTile(new (x, y)).GetComponent<Tile>());
-                
-                if (data != null)
-                    _tiles[i].SetTileId(data.tileId[i]);
+                _tiles[i].SetTileId(data != null ? data.tileId[i] : 0);
             }
         }
         

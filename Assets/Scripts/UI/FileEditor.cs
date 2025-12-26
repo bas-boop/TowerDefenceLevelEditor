@@ -1,36 +1,50 @@
-﻿using TMPro;
+﻿// standard
+using System.IO;
 using UnityEngine;
+using UnityEngine.Events;
 
+// third party
+using SFB;
+
+// mine
 using Framework.TileSystem;
 
 namespace UI
 {
     public sealed class FileEditor : MonoBehaviour
     {
-        [SerializeField] private TilemapData tilemapData;
         [SerializeField] private TileMap tileMap;
-        [SerializeField] private TMP_InputField[] inputFields;
 
-        public TilemapData GetData()
+        [SerializeField] private UnityEvent<TilemapData> onLoad;
+        [SerializeField] private UnityEvent<TilemapData> onSave;
+
+        public void LoadFile()
         {
-            TilemapData data = new ()
-            {
-                //todo fix hardcode numbers
-                rows = 5,
-                cols = 5
-            };
-            data.tileId = new int[data.rows * data.cols];
-            
-            for (int i = 0; i < data.rows; i++)
-                for (int j = 0; j < data.cols; j++)
-                    data.tileId[i * data.rows + j] = tileMap.GetTiles()[i * data.rows + j].GetId();
+            string[] filePaths = StandaloneFileBrowser.OpenFilePanel("Open File", "", "json", false);
 
-            return data;
+            if (filePaths == null
+                || filePaths.Length == 0)
+                return;
+
+            string json = File.ReadAllText(filePaths[0]);
+            TilemapData loadedJson = JsonUtility.FromJson<TilemapData>(json);
+            
+            onLoad?.Invoke(loadedJson);
         }
 
-        public void SetData(TilemapData data)
+        public void SaveFile()
         {
-            tileMap.CreateNewMap(data);
+            string filePath = StandaloneFileBrowser.SaveFilePanel("Save File", Application.dataPath, "data", "json");
+
+            if (string.IsNullOrEmpty(filePath))
+                return;
+
+            TilemapData data = tileMap.GetData();
+            string json = JsonUtility.ToJson(data, true);
+            
+            File.WriteAllText(filePath, json);
+
+            onSave?.Invoke(data);
         }
     }
 }
