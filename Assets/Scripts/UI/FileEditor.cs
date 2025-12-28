@@ -27,8 +27,16 @@ namespace UI
                 return;
 
             string json = File.ReadAllText(filePaths[0]);
-            TilemapData loadedJson = JsonUtility.FromJson<TilemapData>(json);
             
+            TilemapData loadedJson = JsonUtility.FromJson<TilemapData>(json);
+
+            if (!IsValidTilemapFile(loadedJson))
+            {
+                Debug.LogError("Invalid JSON file.");
+                return;
+            }
+
+            Debug.Log("Valid TDLE file loaded!");
             onLoad?.Invoke(loadedJson);
         }
 
@@ -46,5 +54,26 @@ namespace UI
 
             onSave?.Invoke(data);
         }
+        
+        private bool IsValidTilemapFile(TilemapData data)
+        {
+            if (data == null)
+                return false;
+
+            if (data.jsonFile != "TDLE")
+                return false;
+
+            if (string.IsNullOrEmpty(data.version))
+                return false;
+
+            if (data.rows <= 0 || data.cols <= 0)
+                return false;
+
+            if (data.tileId == null || data.tileId.Length == 0)
+                return false;
+
+            return true;
+        }
+
     }
 }

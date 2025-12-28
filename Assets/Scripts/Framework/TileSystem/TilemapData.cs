@@ -5,8 +5,8 @@ namespace Framework.TileSystem
     [Serializable]
     public sealed class TilemapData
     {
-        //todo: needs more data; json file type, version, ect.
-        public string name = "file";
+        public string jsonFile;
+        public string version;
         
         public int rows;
         public int cols;

@@ -18,6 +18,8 @@ namespace Framework.TileSystem
         {
             TilemapData data = new ()
             {
+                jsonFile = "TDLE",
+                version = "0.1",
                 rows = size.x,
                 cols = size.y
             };
