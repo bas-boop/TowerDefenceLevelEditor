@@ -60,7 +60,7 @@ namespace UI
             if (data == null)
                 return false;
 
-            if (data.jsonFile != "TDLE")
+            if (data.identifier != "TDLE")
                 return false;
 
             if (string.IsNullOrEmpty(data.version))

@@ -106,6 +106,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09d6a97ea5294ffc9dd9dc692037cfeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UI.Tile
+  tileData: {fileID: 11400000, guid: 5e7257d219cac6b469e85bbdb12e4d27, type: 2}
   spriteRenderer: {fileID: 6221551485180029084}
 --- !u!58 &2409861848770572655
 CircleCollider2D:

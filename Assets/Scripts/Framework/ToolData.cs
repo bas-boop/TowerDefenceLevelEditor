@@ -1,11 +1,22 @@
 ﻿using UnityEngine;
 
+using Framework.TileSystem;
+
 namespace Framework
 {
     public sealed class ToolData : Singleton<ToolData>
     {
-        public int SelectedTileId { get; set; } = 0;
+        [SerializeField] private TileData startingData;
+        
+        public TileData SelectedTileData { get; set; }
 
-        public void SetSelectedTileId(int id) => SelectedTileId = id;
+        private void Start() => SelectedTileData = startingData;
+
+        public void SetSelectedTileId(TileData data) => SelectedTileData = data;
+        
+        public void SetData(string targetName)
+        {
+            SelectedTileData = TileDataHolder.Instance.GetData(targetName);
+        }
     }
 }

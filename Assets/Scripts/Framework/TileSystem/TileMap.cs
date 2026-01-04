@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Framework.TileSystem
@@ -6,6 +7,7 @@ namespace Framework.TileSystem
     public sealed class TileMap : MonoBehaviour
     {
         [SerializeField] private GameObject tilePrefab;
+        [SerializeField] private TileData noneTileData;
         [SerializeField] private Vector2Int size = Vector2Int.one * 3;
 
         private List<Tile> _tiles = new();
@@ -18,13 +20,13 @@ namespace Framework.TileSystem
         {
             TilemapData data = new ()
             {
-                jsonFile = "TDLE",
+                identifier = "TDLE",
                 version = "0.1",
                 rows = size.x,
                 cols = size.y
             };
             
-            data.tileId = new int[data.rows * data.cols];
+            data.tileId = new string[data.rows * data.cols];
             
             for (int i = 0; i < data.rows; i++)
             for (int j = 0; j < data.cols; j++)
@@ -32,6 +34,7 @@ namespace Framework.TileSystem
                 if (i * data.rows + j >= _tiles.Count)
                     continue;
                 
+                Debug.Log(_tiles[i * data.rows + j].GetId());
                 data.tileId[i * data.rows + j] = _tiles[i * data.rows + j].GetId();
             }
 
@@ -82,7 +85,7 @@ namespace Framework.TileSystem
                 int y = i / size.x;
                 
                 _tiles.Add(CreateTile(new (x, y)).GetComponent<Tile>());
-                _tiles[i].SetTileId(data != null ? data.tileId[i] : 0);
+                _tiles[i].SetTileId(data != null ? TileDataHolder.Instance.GetData(data.tileId[i]) : noneTileData);
             }
         }
         

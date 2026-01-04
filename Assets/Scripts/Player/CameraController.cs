@@ -39,7 +39,7 @@ namespace Player
         {
             if (isRest)
             {
-                _camera.orthographicSize = scroll;
+                _camera.orthographicSize = scroll * 0.75f;
                 return;
             }
             
