@@ -2,6 +2,15 @@
 The tool is a grid-based level editor for tower defense games that allows level designers to create layouts without a test or play mode. Using a dynamic canvas, various tile types can be placed, enemy routes can be defined with multiple paths and intersections, and custom content can optionally be added. The tool includes basic functionality such as tile selection, canvas resizing, and path editing, and offers save/load capabilities that save levels in JSON format.
 
 The final output is a game-ready data file with canvas size, tile map, path nodes, and any asset mappings. The test build focuses on drawing the grid, changing tiles, JSON save/load, and basic canvas resizing. The full version expands on this with more extensive editing tools, pre-export validation, and UI improvements.
+
+## Beta todo list
+Feedback from teachers:
+- Custom tile do not work when loading it in when you don't have the custom tile.
+- Constrains per tile (end and start)
+- Enemy path drawing/editing
+- Ctrl+Z, Ctrl+Y via command pattern
+- UI/UX
+
 ## Alpha UML class diagram
 
 ```mermaid
