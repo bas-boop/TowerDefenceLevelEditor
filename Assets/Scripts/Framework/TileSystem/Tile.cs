@@ -19,6 +19,9 @@ namespace Framework.TileSystem
 
         public void SetTileId(TileData data)
         {
+            if (data == null)
+                data = tileData;
+            
             tileData = data;
             spriteRenderer.color = tileData.tileColor;
         }

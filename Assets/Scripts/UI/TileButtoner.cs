@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
@@ -16,20 +18,48 @@ namespace UI
 
         [SerializeField] private string tileName;
         [SerializeField] private Color tileColor;
+        
+        private readonly Dictionary<string, Button> _buttonCache = new ();
 
         public void AddNewButton()
         {
             tileName = inputField.text;
             tileColor = colorPicker.GetSelectedColor();
             
-            if (!TileDataHolder.Instance.CreateData(tileName, tileColor))
-                return;
-            
-            Button b = Instantiate(buttonPrefab, buttonsParent);
-            b.GetComponentInChildren<TMP_Text>().text = tileName;
-            b.onClick.AddListener(() => ButtonEvent(tileName));
+            CreateButton(tileName, tileColor);
         }
 
+        public void AddSetupButtons(TileDatas data)
+        {
+            for (int i = 0; i < data.tileNames.Length; i++)
+            {
+                if (_buttonCache.ContainsKey(data.tileNames[i]))
+                    continue;
+                
+                CreateButton(data.tileNames[i], data.tileColors[i]);
+            }
+        }
+
+        private void CreateButton(string targetName, Color targetColor)
+        {
+            bool one = _buttonCache.ContainsKey(targetName);
+            bool two = !TileDataHolder.Instance.CreateData(targetName, targetColor);
+            //Debug.Log(_buttonCache.ContainsKey(targetName));
+            //Debug.Log(!TileDataHolder.Instance.CreateData(targetName, targetColor));
+            
+            if (one && two)
+                return;
+
+            //Debug.Log("create");
+            
+            Button b = Instantiate(buttonPrefab, buttonsParent);
+            b.GetComponentInChildren<TMP_Text>().text = targetName;
+            b.onClick.AddListener(() => ButtonEvent(targetName));
+            
+            _buttonCache.Add(targetName, b);
+        }
+
+        
         private void ButtonEvent(string targetName)
         {
             Debug.Log(targetName);

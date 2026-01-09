@@ -5,7 +5,7 @@ The final output is a game-ready data file with canvas size, tile map, path node
 
 ## Beta todo list
 Feedback from teachers:
-- Custom tile do not work when loading it in when you don't have the custom tile.
+- ~~Custom tile do not work when loading it in when you don't have the custom tile.~~
 - Constrains per tile (end and start)
 - Enemy path drawing/editing
 - Ctrl+Z, Ctrl+Y via command pattern

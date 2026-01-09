@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59de2f03b73648018e5342e8be5ccf00, type: 3}
   m_Name: None
   m_EditorClassIdentifier: Assembly-CSharp::Framework.TileSystem.TileData
-  tileName: 
+  tileName: None
   tileColor: {r: 0, g: 0, b: 0, a: 1}

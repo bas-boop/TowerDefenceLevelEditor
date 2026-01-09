@@ -1,0 +1,20 @@
+﻿using System;
+using UnityEngine;
+
+namespace Framework.TileSystem
+{
+    [Serializable]
+    public sealed class TileDatas : BaseData
+    {
+        public string[] tileNames;
+        public Color[] tileColors;
+
+        public TileDatas(string[] targetNames, Color[] targetColors)
+        {
+            identifier = "TDLE";
+            version = "0.1";
+            tileNames = targetNames;
+            tileColors = targetColors;
+        }
+    }
+}

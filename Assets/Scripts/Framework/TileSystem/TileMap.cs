@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace Framework.TileSystem
@@ -83,8 +82,9 @@ namespace Framework.TileSystem
             {
                 int x = i % size.x;
                 int y = i / size.x;
-                
-                _tiles.Add(CreateTile(new (x, y)).GetComponent<Tile>());
+
+                Tile t = CreateTile(new(x, y)).GetComponent<Tile>();
+                _tiles.Add(t);
                 _tiles[i].SetTileId(data != null ? TileDataHolder.Instance.GetData(data.tileId[i]) : noneTileData);
             }
         }
