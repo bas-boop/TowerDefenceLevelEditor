@@ -1,5 +1,7 @@
 ﻿// standard
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -13,6 +15,8 @@ namespace Framework.FileSystem
 {
     public sealed class FileEditor : MonoBehaviour
     {
+        private const string TILES_DATA = "/Framework.TileSystem.TileDatas.json";
+        
         [SerializeField] private TileMap tileMap;
 
         // todo: should rename
@@ -32,7 +36,7 @@ namespace Framework.FileSystem
 
         public void LoadTileDatasFile()
         {
-            (bool isSuccessful, BaseData baseData) = LoadFile<TileDatas>();
+            (bool isSuccessful, BaseData baseData) = LoadFile<TileDatas>(true);
             
             if (isSuccessful)
                 onLoadTiledatas?.Invoke(baseData as TileDatas);
@@ -47,11 +51,7 @@ namespace Framework.FileSystem
 
         public void SaveTileDatas(TileDatas data)
         {
-            // should be saved somewhere and retrieved
-            // todo: fix
-            
-            //TileDatas data = new ();
-            SaveFile2(data);
+            SaveFile2(data, true);
             onSaveTiledatas?.Invoke(data);
         }
         
@@ -70,9 +70,12 @@ namespace Framework.FileSystem
             onSave?.Invoke(data);
         }
 
-        private void SaveFile2<T>(T dataToSave) where T : BaseData
+        private void SaveFile2<T>(T dataToSave, bool usePersistentDataPath = false) where T : BaseData
         {
-            string filePath = StandaloneFileBrowser.SaveFilePanel("Save File", Application.dataPath, typeof(T).ToString(), "json");
+            Debug.Log(Application.persistentDataPath);
+            string filePath = usePersistentDataPath
+                ? Application.persistentDataPath + TILES_DATA
+                : StandaloneFileBrowser.SaveFilePanel("Save File", Application.dataPath, typeof(T).ToString(), "json");
 
             if (string.IsNullOrEmpty(filePath))
                 return;
@@ -82,12 +85,17 @@ namespace Framework.FileSystem
             File.WriteAllText(filePath, json);
         }
         
-        private (bool, BaseData) LoadFile<T>() where T : BaseData
+        private (bool, BaseData) LoadFile<T>(bool usePersistentDataPath = false) where T : BaseData
         {
-            string[] filePaths = StandaloneFileBrowser.OpenFilePanel("Open File", "", "json", false);
+            List<string> filePaths = new ();
 
-            if (filePaths == null
-                || filePaths.Length == 0)
+            if (usePersistentDataPath)
+                filePaths.Add(Application.persistentDataPath + TILES_DATA);
+            else
+                filePaths = StandaloneFileBrowser.OpenFilePanel("Open File", "", "json", false).ToList();
+
+            if (filePaths.Count == 0
+                || !File.Exists(filePaths[0]))
                 return (false, null);
 
             string json = File.ReadAllText(filePaths[0]);
@@ -104,6 +112,7 @@ namespace Framework.FileSystem
             return (true, loadedJson);
         }
         
+        // todo: this should be a abstract function in each data type
         private bool IsValidFile(BaseData data)
         {
             if (data == null)
@@ -114,13 +123,6 @@ namespace Framework.FileSystem
 
             if (string.IsNullOrEmpty(data.version))
                 return false;
-
-            // old, before <T> with load and save
-            /*if (data.rows <= 0 || data.cols <= 0)
-                return false;
-
-            if (data.tileId == null || data.tileId.Length == 0)
-                return false;*/
 
             return true;
         }

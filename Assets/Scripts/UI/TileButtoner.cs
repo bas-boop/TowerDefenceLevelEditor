@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -42,15 +41,9 @@ namespace UI
 
         private void CreateButton(string targetName, Color targetColor)
         {
-            bool one = _buttonCache.ContainsKey(targetName);
-            bool two = !TileDataHolder.Instance.CreateData(targetName, targetColor);
-            //Debug.Log(_buttonCache.ContainsKey(targetName));
-            //Debug.Log(!TileDataHolder.Instance.CreateData(targetName, targetColor));
-            
-            if (one && two)
+            if (_buttonCache.ContainsKey(targetName)
+                && !TileDataHolder.Instance.CreateData(targetName, targetColor))
                 return;
-
-            //Debug.Log("create");
             
             Button b = Instantiate(buttonPrefab, buttonsParent);
             b.GetComponentInChildren<TMP_Text>().text = targetName;
