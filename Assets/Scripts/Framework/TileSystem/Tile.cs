@@ -1,15 +1,15 @@
 ﻿using UnityEngine;
 
+using Framework.Command;
+
 namespace Framework.TileSystem
 {
     public sealed class Tile : MonoBehaviour
     {
-        [SerializeField] private TileData tileData;
         [SerializeField] private SpriteRenderer spriteRenderer;
 
-        private void OnMouseEnter() { }
-
-        private void OnMouseExit() { }
+        private string _tileName;
+        private Color _tileColor;
 
         private void OnMouseOver()
         {
@@ -17,20 +17,38 @@ namespace Framework.TileSystem
                 DoDrag();
         }
 
-        public void SetTileId(TileData data)
+        public void SetTileId(TileData targetData)
         {
-            if (data == null)
-                data = tileData;
-            
-            tileData = data;
-            spriteRenderer.color = tileData.tileColor;
+            if (targetData == null)
+                return;
+
+            if (_tileName == targetData.tileName &&
+                _tileColor == targetData.tileColor)
+                return;
+
+            CommandSystem.Instance.Execute(
+                new TileCommand(
+                    this,
+                    _tileName,
+                    _tileColor,
+                    targetData.tileName,
+                    targetData.tileColor
+                )
+            );
         }
 
-        public string GetId() => tileData.tileName;
-        
+        public void Apply(string name, Color color)
+        {
+            _tileName = name;
+            _tileColor = color;
+            spriteRenderer.color = color;
+        }
+
+        public string GetId() => _tileName;
+
         private void DoDrag()
         {
-            tileData = ToolData.Instance.SelectedTileData;
+            TileData tileData = ToolData.Instance.SelectedTileData;
             SetTileId(tileData);
         }
     }

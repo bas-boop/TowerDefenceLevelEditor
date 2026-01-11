@@ -30,7 +30,7 @@ namespace Framework.Command
                 return;
 
             ICommand command = _redoStack.Pop();
-            command.Execute();
+            command.Execute(true);
             _undoStack.Push(command);
         }
     }

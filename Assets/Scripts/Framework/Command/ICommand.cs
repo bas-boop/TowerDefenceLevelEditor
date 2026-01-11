@@ -2,7 +2,7 @@
 {
     public interface ICommand
     {
-        void Execute();
+        void Execute(bool runtime = false);
         void Undo();
     }
 }
