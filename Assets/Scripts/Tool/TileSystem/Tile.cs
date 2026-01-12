@@ -2,7 +2,7 @@
 
 using Framework.Command;
 
-namespace Framework.TileSystem
+namespace Tool.TileSystem
 {
     public sealed class Tile : MonoBehaviour
     {
@@ -13,7 +13,8 @@ namespace Framework.TileSystem
 
         private void OnMouseOver()
         {
-            if (Input.GetKey(KeyCode.Mouse0))
+            if (ToolStateChanger.Instance.CurrentState == ToolStates.LEVEL_EDITING
+                && Input.GetKey(KeyCode.Mouse0))
                 DoDrag();
         }
 
@@ -22,8 +23,8 @@ namespace Framework.TileSystem
             if (targetData == null)
                 return;
 
-            if (_tileName == targetData.tileName &&
-                _tileColor == targetData.tileColor)
+            if (_tileName == targetData.tileName
+                && _tileColor == targetData.tileColor)
                 return;
 
             CommandSystem.Instance.Execute(

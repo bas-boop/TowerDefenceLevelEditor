@@ -9,9 +9,9 @@ using UnityEngine.Events;
 using SFB;
 
 // mine
-using Framework.TileSystem;
+using Tool.TileSystem;
 
-namespace Framework.FileSystem
+namespace Tool.FileSystem
 {
     public sealed class FileEditor : MonoBehaviour
     {

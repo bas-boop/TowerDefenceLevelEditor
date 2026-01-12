@@ -1,4 +1,4 @@
-﻿namespace Framework.TileSystem
+﻿namespace Tool.TileSystem
 {
     public abstract class BaseData
     {

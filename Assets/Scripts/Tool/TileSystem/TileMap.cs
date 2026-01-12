@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Framework.TileSystem
+namespace Tool.TileSystem
 {
     public sealed class TileMap : MonoBehaviour
     {

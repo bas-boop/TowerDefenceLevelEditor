@@ -2,9 +2,10 @@
 using System.Linq;
 using UnityEngine;
 
-using Framework.FileSystem;
+using Framework;
+using Tool.FileSystem;
 
-namespace Framework.TileSystem
+namespace Tool.TileSystem
 {
     public sealed class TileDataHolder : Singleton<TileDataHolder>
     {

@@ -3,8 +3,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-using Framework;
-using Framework.TileSystem;
+using Tool;
+using Tool.TileSystem;
 
 namespace UI
 {

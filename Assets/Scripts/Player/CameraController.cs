@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-using Framework.TileSystem;
+using Tool;
+using Tool.TileSystem;
 
 namespace Player
 {
@@ -20,11 +21,17 @@ namespace Player
 
         public void Move(Vector2 input)
         {
+            if (ToolStateChanger.Instance.CurrentState == ToolStates.TILE_CREATION)
+                return;
+            
             rb.linearVelocity = input * speed;
         }
 
         public void ResetPosition()
         {
+            if (ToolStateChanger.Instance.CurrentState == ToolStates.TILE_CREATION)
+                return;
+            
             List<Tile> tiles = tileMap.GetTiles();
             Bounds b = new();
             
@@ -37,6 +44,9 @@ namespace Player
 
         public void Zoom(float scroll, bool isRest = false)
         {
+            if (ToolStateChanger.Instance.CurrentState == ToolStates.TILE_CREATION)
+                return;
+            
             if (isRest)
             {
                 _camera.orthographicSize = scroll * 0.75f;

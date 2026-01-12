@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 
-using Framework.TileSystem;
+using Framework;
+using Tool.TileSystem;
 
-namespace Framework
+namespace Tool
 {
     public sealed class ToolData : Singleton<ToolData>
     {

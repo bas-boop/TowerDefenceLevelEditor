@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Framework.TileSystem
+namespace Tool.TileSystem
 {
     [Serializable]
     public sealed class TileDatas : BaseData

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Framework.TileSystem
+namespace Tool.TileSystem
 {
     [Serializable]
     public sealed class TilemapData : BaseData
