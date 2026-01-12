@@ -41,8 +41,8 @@ namespace UI
 
         private void CreateButton(string targetName, Color targetColor)
         {
-            if (_buttonCache.ContainsKey(targetName)
-                && !TileDataHolder.Instance.CreateData(targetName, targetColor))
+            if (!TileDataHolder.Instance.CreateData(targetName, targetColor)
+                && _buttonCache.ContainsKey(targetName))
                 return;
             
             Button b = Instantiate(buttonPrefab, buttonsParent);
