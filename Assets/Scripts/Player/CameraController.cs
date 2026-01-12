@@ -8,9 +8,16 @@ namespace Player
 {
     public sealed class CameraController : MonoBehaviour
     {
+        private const float MARGIN = 0.75f;
+        
         [SerializeField] private TileMap tileMap;
         [SerializeField] private Rigidbody2D rb;
-        [SerializeField] private float speed = 3;
+
+        [SerializeField] private float speed = 3f;
+        [SerializeField] private float baseZoom = 5f;
+        [SerializeField] private float minSpeedMultiplier = 0.3f;
+        [SerializeField] private float maxSpeedMultiplier = 3f;
+
 
         private Camera _camera;
         private Vector2 _centerPos;
@@ -23,8 +30,10 @@ namespace Player
         {
             if (ToolStateChanger.Instance.CurrentState == ToolStates.TILE_CREATION)
                 return;
-            
-            rb.linearVelocity = input * speed;
+
+            float zoomFactor = _camera.orthographicSize / baseZoom;
+            zoomFactor = Mathf.Clamp(zoomFactor, minSpeedMultiplier, maxSpeedMultiplier);
+            rb.linearVelocity = input * (speed * zoomFactor);
         }
 
         public void ResetPosition()
@@ -49,7 +58,7 @@ namespace Player
             
             if (isRest)
             {
-                _camera.orthographicSize = scroll * 0.75f;
+                _camera.orthographicSize = scroll * MARGIN;
                 return;
             }
             
