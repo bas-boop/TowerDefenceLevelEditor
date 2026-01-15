@@ -44,7 +44,7 @@ namespace Tool.TileSystem
             return data;
         }
 
-        public void CreateNewMap(TilemapData data) => InitTileMap(data);
+        public void CreateNewMap(TilemapData data) => InitTileMap(data, false);
 
         public void SetHeight(string input)
         {
@@ -54,7 +54,7 @@ namespace Tool.TileSystem
 
             TilemapData oldData = GetData();
             size = new(size.x, height);
-            CreateNewMap(oldData);
+            InitTileMap(oldData, true);
         }
 
         public void SetWidth(string input)
@@ -66,45 +66,59 @@ namespace Tool.TileSystem
 
             TilemapData oldData = GetData();
             size = new(width, size.y);
-            CreateNewMap(oldData);
+            InitTileMap(oldData, true);
         }
         
         public int GetBiggestSide() => size.x >= size.y ? size.x : size.y;
 
-        private void InitTileMap(TilemapData? data)
+        private void InitTileMap(TilemapData? data, bool forceSize = false)
         {
             ClearGrid();
 
-            int newWidth = size.x;
-            int newHeight = size.y;
-            int newCount = newWidth * newHeight;
+            int newWidth;
+            int newHeight;
+
+            if (data != null
+                && !forceSize)
+            {
+                newWidth = data.rows;
+                newHeight = data.cols;
+                size = new (newWidth, newHeight);
+            }
+            else
+            {
+                newWidth = size.x;
+                newHeight = size.y;
+            }
 
             int oldWidth = data?.rows ?? 0;
             int oldHeight = data?.cols ?? 0;
 
-            for (int i = 0; i < newCount; i++)
+            for (int y = 0; y < newHeight; y++)
             {
-                int x = i % newWidth;
-                int y = i / newWidth;
-
-                Tile currentTile = CreateTile(new(x, y)).GetComponent<Tile>();
-                _tiles.Add(currentTile);
-
-                bool assigned = false;
-                
-                if (data != null)
+                for (int x = 0; x < newWidth; x++)
                 {
-                    TryAssignTile(out assigned,
-                        x,
-                        y,
-                        oldWidth,
-                        oldHeight,
-                        data,
-                        currentTile);
-                }
+                    Tile currentTile = CreateTile(new (x, y)).GetComponent<Tile>();
+                    _tiles.Add(currentTile);
 
-                if (!assigned)
-                    currentTile.SetTileId(noneTileData);
+                    bool assigned = false;
+
+                    if (data != null)
+                    {
+                        TryAssignTile(
+                            out assigned,
+                            x,
+                            y,
+                            oldWidth,
+                            oldHeight,
+                            data,
+                            currentTile
+                        );
+                    }
+
+                    if (!assigned)
+                        currentTile.SetTileId(noneTileData);
+                }
             }
         }
 
