@@ -7,13 +7,13 @@ The final output is a game-ready data file with canvas size, tile map, path node
 Feedback from teachers:
 - ~~Custom tile do not work when loading it in when you don't have the custom tile.~~
 - Constrains per tile (end and start)
-- Tile editing
+- ~~Tile editing~~
 - Enemy path drawing/editing
 - UI/UX
 - Ctrl+Z, Ctrl+Y via command pattern
   - ~~Tile placement~~
-  - Tile adding/editing
-  - Size
+  - ~~Tile adding/editing~~
+  - ~~Size~~
   - enemy paths
 
 ## Alpha UML class diagram
