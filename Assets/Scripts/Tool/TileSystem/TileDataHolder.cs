@@ -56,6 +56,25 @@ namespace Tool.TileSystem
 
             return true;
         }
+        
+        public bool DeleteData(string targetName)
+        {
+            TileData existingTileData = GetData(targetName);
+
+            if (existingTileData == null)
+            {
+                Debug.LogWarning("Tilename not found");
+                return false;
+            }
+
+            tilesDatas.Remove(existingTileData);
+
+            ConvertData();
+            fileEditor.SaveTileDatas(_tileDatas);
+
+            return true;
+        }
+
 
         public TileData GetData(string targetName)
         {

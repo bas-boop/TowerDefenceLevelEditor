@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
 using Tool;
 using Tool.TileSystem;
+using UnityEngine.Events;
 
 namespace UI
 {
@@ -17,6 +19,9 @@ namespace UI
 
         [SerializeField] private string tileName;
         [SerializeField] private Color tileColor;
+
+        [SerializeField] private UnityEvent<string> onAdd = new();
+        [SerializeField] private UnityEvent<string> onRemove = new();
         
         private readonly Dictionary<string, Button> _buttonCache = new ();
         private string _buttonNameToEdit;
@@ -26,13 +31,31 @@ namespace UI
             tileName = inputField.text;
             tileColor = colorPicker.GetSelectedColor();
             
+            if (tileName is "" or null)
+                return;
+            
             CreateButton(tileName, tileColor);
+            onAdd?.Invoke(tileName);
         }
 
         public void EditButton()
         {
             tileColor = colorPicker.GetSelectedColor();
             TileDataHolder.Instance.EditData(_buttonNameToEdit, tileColor);
+        }
+
+        public void DeleteButton()
+        {
+            if (!_buttonCache.ContainsKey(_buttonNameToEdit))
+                return;
+            
+            if (TileDataHolder.Instance.DeleteData(_buttonNameToEdit))
+            {
+                Debug.Log(_buttonCache[_buttonNameToEdit].name);
+                Destroy(_buttonCache[_buttonNameToEdit].gameObject);
+                _buttonCache.Remove(_buttonNameToEdit);
+                onRemove?.Invoke(_buttonNameToEdit);
+            }
         }
 
         public void SetButtonToEdit(string targetButton)
@@ -59,6 +82,7 @@ namespace UI
                 return;
             
             Button b = Instantiate(buttonPrefab, buttonsParent);
+            b.name = $"TileButton{targetName}";
             b.GetComponentInChildren<TMP_Text>().text = targetName;
             b.onClick.AddListener(() => ButtonEvent(targetName));
             

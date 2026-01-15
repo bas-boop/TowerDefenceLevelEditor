@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,6 +15,8 @@ namespace UI
         [SerializeField] private TMP_InputField nameInput;
         [SerializeField] private ColorPicker colorPicker;
         [SerializeField] private TileButtoner tileButtoner;
+
+        private Dictionary<string, Button> _buttons = new(); 
 
         private void Start()
         {
@@ -32,10 +35,40 @@ namespace UI
 
                 int cachedIndex = i;
                 currentButton.onClick.AddListener(() => SelectButton(tileDatas.tileNames[cachedIndex], tileDatas.tileColors[cachedIndex]));
-                currentButton.colors = SetButtonColors(currentButton.colors, tileDatas.tileColors[i]);;
+                currentButton.colors = SetButtonColors(currentButton.colors, tileDatas.tileColors[i]);
+                _buttons.Add(tileDatas.tileNames[i], currentButton);
             }
         }
+        
+        public void AddButton(string buttonName)
+        {
+            if (_buttons.ContainsKey(buttonName))
+                return;
 
+            GameObject buttonObject = Instantiate(tileButton, parent);
+            Button currentButton = buttonObject.GetComponent<Button>();
+
+            TMP_Text text = currentButton.GetComponentInChildren<TMP_Text>();
+            text.text = buttonName;
+
+            Color color = colorPicker.GetSelectedColor();
+
+            currentButton.onClick.AddListener(() => SelectButton(buttonName, color));
+            currentButton.colors = SetButtonColors(currentButton.colors, color);
+
+            _buttons.Add(buttonName, currentButton);
+        }
+
+
+        public void RemoveButton(string buttonName)
+        {
+            if (!_buttons.TryGetValue(buttonName, out Button b))
+                return;
+
+            _buttons.Remove(buttonName);
+            Destroy(b.gameObject);
+        }
+        
         private void SelectButton(string targetName, Color targetColor)
         {
             nameInput.text = targetName;
