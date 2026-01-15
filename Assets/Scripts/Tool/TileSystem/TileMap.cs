@@ -8,6 +8,8 @@ namespace Tool.TileSystem
 {
     public sealed class TileMap : MonoBehaviour
     {
+        private const int MAX_SIZE = 100;
+        
         [SerializeField] private GameObject tilePrefab;
         [SerializeField] private TileData noneTileData;
         [SerializeField] private Vector2Int size = Vector2Int.one * 3;
@@ -16,7 +18,7 @@ namespace Tool.TileSystem
 
         private List<Tile> _tiles = new();
 
-        private void Awake() => InitTileMap(null);
+        private void Awake() => CreateNewMap();
 
         public List<Tile> GetTiles() => _tiles;
 
@@ -49,13 +51,22 @@ namespace Tool.TileSystem
             return data;
         }
 
-        public void CreateNewMap(TilemapData data) => InitTileMap(data, false);
+        public void CreateNewMap(TilemapData data) => InitTileMap(data);
+        
+        public void CreateNewMap() => InitTileMap(null);
 
         public void SetHeight(string input)
         {
             int.TryParse(input, out int height);
-            if (height <= 0)
-                return;
+            
+            switch (height)
+            {
+                case <= 0:
+                    return;
+                case > MAX_SIZE:
+                    height = MAX_SIZE;
+                    break;
+            }
 
             TilemapData oldData = GetData();
             Vector2Int oldSize = size;
@@ -71,8 +82,14 @@ namespace Tool.TileSystem
         {
             int.TryParse(input, out int width);
             
-            if (width <= 0)
-                return;
+            switch (width)
+            {
+                case <= 0:
+                    return;
+                case > MAX_SIZE:
+                    width = MAX_SIZE;
+                    break;
+            }
 
             TilemapData oldData = GetData();
             Vector2Int oldSize = size;
@@ -93,6 +110,7 @@ namespace Tool.TileSystem
             TilemapData oldData = GetData();
             size = targetSize;
             InitTileMap(oldData, true);
+            onResize?.Invoke(size.x, size.y);
         }
         
         public int GetBiggestSide() => size.x >= size.y ? size.x : size.y;
