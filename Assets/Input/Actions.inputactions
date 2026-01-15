@@ -50,6 +50,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Save",
+                    "type": "Button",
+                    "id": "e360c179-2123-460a-bce1-3dfe8cd444fa",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -67,7 +76,7 @@
                 {
                     "name": "up",
                     "id": "a804db52-d963-4628-acb5-85e9682235f1",
-                    "path": "<Keyboard>/w",
+                    "path": "<Keyboard>/upArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -78,7 +87,7 @@
                 {
                     "name": "down",
                     "id": "f89f9dee-a2cd-44a9-9210-ce62fbea9308",
-                    "path": "<Keyboard>/s",
+                    "path": "<Keyboard>/downArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -89,7 +98,7 @@
                 {
                     "name": "left",
                     "id": "085443c9-db30-457a-82a6-a013af61f9b8",
-                    "path": "<Keyboard>/a",
+                    "path": "<Keyboard>/leftArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -100,7 +109,7 @@
                 {
                     "name": "right",
                     "id": "300a6cb0-7a29-4443-845d-4140a3c101d6",
-                    "path": "<Keyboard>/d",
+                    "path": "<Keyboard>/rightArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -193,6 +202,39 @@
                     "processors": "",
                     "groups": "",
                     "action": "Redo",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "One Modifier",
+                    "id": "7bf350c2-c51a-4c42-b493-66333d78417d",
+                    "path": "OneModifier",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Save",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "modifier",
+                    "id": "9c28a642-26bc-4a8b-9fd0-e3a0b34f8a0a",
+                    "path": "<Keyboard>/ctrl",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Save",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "binding",
+                    "id": "b21c5963-4239-4b50-bcdc-1c4d99f5a353",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Save",
                     "isComposite": false,
                     "isPartOfComposite": true
                 }

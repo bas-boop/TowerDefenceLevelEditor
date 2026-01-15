@@ -45,34 +45,20 @@ namespace Tool.FileSystem
         public void SaveTilemapData()
         {
             TilemapData data = tileMap.GetData();
-            SaveFile2(data);
+            SaveFile(data);
             onSave?.Invoke(data);
         }
 
         public void SaveTileDatas(TileDatas data)
         {
-            SaveFile2(data, true);
+            SaveFile(data, true);
             onSaveTiledatas?.Invoke(data);
         }
-        
-        public void SaveFile()
-        {
-            string filePath = StandaloneFileBrowser.SaveFilePanel("Save File", Application.dataPath, "data", "json");
 
-            if (string.IsNullOrEmpty(filePath))
-                return;
-
-            TilemapData data = tileMap.GetData();
-            string json = JsonUtility.ToJson(data, true);
-            
-            File.WriteAllText(filePath, json);
-
-            onSave?.Invoke(data);
-        }
-
-        private void SaveFile2<T>(T dataToSave, bool usePersistentDataPath = false) where T : BaseData
+        private void SaveFile<T>(T dataToSave, bool usePersistentDataPath = false) where T : BaseData
         {
             Debug.Log(Application.persistentDataPath);
+            
             string filePath = usePersistentDataPath
                 ? Application.persistentDataPath + TILES_DATA
                 : StandaloneFileBrowser.SaveFilePanel("Save File", Application.dataPath, typeof(T).ToString(), "json");

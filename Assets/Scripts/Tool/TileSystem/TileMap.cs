@@ -27,7 +27,7 @@ namespace Tool.TileSystem
             TilemapData data = new ()
             {
                 identifier = "TDLE",
-                version = "0.1",
+                version = "1.0",
                 rows = size.x,
                 cols = size.y
             };

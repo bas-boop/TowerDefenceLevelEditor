@@ -12,7 +12,7 @@ namespace Tool.TileSystem
         public TileDatas(string[] targetNames, Color[] targetColors)
         {
             identifier = "TDLE";
-            version = "0.1";
+            version = "1.0";
             tileNames = targetNames;
             tileColors = targetColors;
         }

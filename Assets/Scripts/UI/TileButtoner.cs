@@ -97,6 +97,14 @@ namespace UI
             b.name = $"TileButton{targetName}";
             b.GetComponentInChildren<TMP_Text>().text = targetName;
             b.onClick.AddListener(() => ButtonEvent(targetName));
+
+            Color c = TileDataHolder.Instance.GetData(targetName).tileColor;
+            ColorBlock colors = b.colors;
+            colors.normalColor = c;
+            colors.highlightedColor = c;
+            colors.selectedColor = c;
+            colors.pressedColor = c;
+            b.colors = colors;
             
             _buttonCache.Add(targetName, b);
         }
@@ -122,6 +130,9 @@ namespace UI
             
             ColorBlock colors = button.colors;
             colors.normalColor = tileColor;
+            colors.highlightedColor = tileColor;
+            colors.selectedColor = tileColor;
+            colors.pressedColor = tileColor;
             button.colors = colors;
         }
         

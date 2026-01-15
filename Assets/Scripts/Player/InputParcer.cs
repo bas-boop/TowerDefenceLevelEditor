@@ -2,6 +2,7 @@
 using UnityEngine.InputSystem;
 
 using Framework.Command;
+using Tool.FileSystem;
 
 namespace Player
 {
@@ -10,6 +11,7 @@ namespace Player
     public sealed class InputParser : MonoBehaviour
     {
         [SerializeField] private CameraController cameraController;
+        [SerializeField] private FileEditor fileEditor;
         [SerializeField] private CommandSystem commandSystem;
         
         private PlayerInput _playerInput;
@@ -48,6 +50,7 @@ namespace Player
         private void AddListeners()
         {
             _inputActionAsset["ResetPosition"].performed += ResetAction;
+            _inputActionAsset["Save"].performed += SaveAction;
             _inputActionAsset["Undo"].performed += UndoAction;
             _inputActionAsset["Redo"].performed += RedoAction;
         }
@@ -55,6 +58,7 @@ namespace Player
         private void RemoveListeners()
         {
             _inputActionAsset["ResetPosition"].performed -= ResetAction;
+            _inputActionAsset["Save"].performed += SaveAction;
             _inputActionAsset["Undo"].performed -= UndoAction;
             _inputActionAsset["Redo"].performed -= RedoAction;
         }
@@ -62,18 +66,12 @@ namespace Player
         #region Context
 
         private void ResetAction(InputAction.CallbackContext context) => cameraController.ResetPosition();
+        
+        private void SaveAction(InputAction.CallbackContext context) => fileEditor.SaveTilemapData();
 
-        private void UndoAction(InputAction.CallbackContext context)
-        {
-            Debug.Log("Undo");
-            commandSystem.Undo();
-        }
+        private void UndoAction(InputAction.CallbackContext context) => commandSystem.Undo();
 
-        private void RedoAction(InputAction.CallbackContext context)
-        {
-            Debug.Log("Redo");
-            commandSystem.Redo();
-        }
+        private void RedoAction(InputAction.CallbackContext context) => commandSystem.Redo();
 
         #endregion
     }
