@@ -3813,6 +3813,21 @@ MonoBehaviour:
   tilePrefab: {fileID: 537145007727754041, guid: 4c88db51116e51e4e8bb955eeb529bcf, type: 3}
   noneTileData: {fileID: 11400000, guid: 5e7257d219cac6b469e85bbdb12e4d27, type: 2}
   size: {x: 5, y: 5}
+  onResize:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 508862686}
+        m_TargetAssemblyTypeName: UI.WidthHeightManager, Assembly-CSharp
+        m_MethodName: UpdateText
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1279713642
 GameObject:
   m_ObjectHideFlags: 0
@@ -4840,7 +4855,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1585681259
 RectTransform:
   m_ObjectHideFlags: 0

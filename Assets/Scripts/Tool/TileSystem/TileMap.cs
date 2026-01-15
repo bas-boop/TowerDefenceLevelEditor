@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+
+using Framework.Command;
 
 namespace Tool.TileSystem
 {
@@ -8,6 +11,8 @@ namespace Tool.TileSystem
         [SerializeField] private GameObject tilePrefab;
         [SerializeField] private TileData noneTileData;
         [SerializeField] private Vector2Int size = Vector2Int.one * 3;
+
+        [SerializeField] private UnityEvent<int, int> onResize = new();
 
         private List<Tile> _tiles = new();
 
@@ -53,8 +58,13 @@ namespace Tool.TileSystem
                 return;
 
             TilemapData oldData = GetData();
+            Vector2Int oldSize = size;
             size = new(size.x, height);
             InitTileMap(oldData, true);
+            
+            CommandSystem.Instance.Execute(
+                new ResizeTilemapCommand(this, size, oldSize)
+            );
         }
 
         public void SetWidth(string input)
@@ -65,7 +75,23 @@ namespace Tool.TileSystem
                 return;
 
             TilemapData oldData = GetData();
+            Vector2Int oldSize = size;
             size = new(width, size.y);
+            InitTileMap(oldData, true);
+            
+            CommandSystem.Instance.Execute(
+                new ResizeTilemapCommand(this, size, oldSize)
+            );
+        }
+
+        public void Resize(Vector2Int targetSize)
+        {
+            if (targetSize.x <= 0
+                || targetSize.y <= 0)
+                return;
+            
+            TilemapData oldData = GetData();
+            size = targetSize;
             InitTileMap(oldData, true);
         }
         
