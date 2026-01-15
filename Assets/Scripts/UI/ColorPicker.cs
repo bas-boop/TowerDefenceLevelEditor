@@ -11,6 +11,10 @@ namespace UI
         [SerializeField] private Slider hueSlider;
         [SerializeField] private Image colorPreview;
         
+        [SerializeField] private RectTransform svIndicator;
+        [SerializeField] private Vector2 indicatorOffset;
+
+        
         [SerializeField] private int textureSize = 256;
         [SerializeField] private int hueTextureWidth = 256;
         [SerializeField] private int hueTextureHeight = 1;
@@ -33,17 +37,7 @@ namespace UI
             hueSlider.onValueChanged.AddListener(OnHueChanged);
             UpdateSvTexture();
             UpdateColor();
-        }
-
-        private void CreateSvTexture()
-        {
-            _svTexture = new (textureSize, textureSize, TextureFormat.RGB24, false)
-            {
-                wrapMode = TextureWrapMode.Clamp,
-                filterMode = FilterMode.Bilinear
-            };
-            
-            svImage.texture = _svTexture;
+            UpdateSvIndicator();
         }
 
         public void OnPointerDown(PointerEventData eventData)
@@ -54,6 +48,30 @@ namespace UI
         public void OnDrag(PointerEventData eventData)
         {
             UpdateSv(eventData);
+        }
+        
+        public Color GetSelectedColor()
+        {
+            return Color.HSVToRGB(_hue, _saturation, _value);
+        }
+
+        public void SetSelectedColor(Color targetColor)
+        {
+            Color.RGBToHSV(targetColor, out _hue, out _saturation, out _value);
+            UpdateSvTexture();
+            UpdateColor();
+            UpdateSvIndicator();
+        }
+        
+        private void CreateSvTexture()
+        {
+            _svTexture = new (textureSize, textureSize, TextureFormat.RGB24, false)
+            {
+                wrapMode = TextureWrapMode.Clamp,
+                filterMode = FilterMode.Bilinear
+            };
+            
+            svImage.texture = _svTexture;
         }
 
         private void OnHueChanged(float h)
@@ -99,6 +117,7 @@ namespace UI
             _value = Mathf.Clamp01((localPoint.y - r.y) / r.height);
 
             UpdateColor();
+            UpdateSvIndicator();
         }
 
         private void UpdateSvTexture()
@@ -123,10 +142,16 @@ namespace UI
             Color c = Color.HSVToRGB(_hue, _saturation, _value);
             colorPreview.color = c;
         }
-
-        public Color GetSelectedColor()
+        
+        private void UpdateSvIndicator()
         {
-            return Color.HSVToRGB(_hue, _saturation, _value);
+            RectTransform rect = svImage.rectTransform;
+            Rect r = rect.rect;
+
+            float x = Mathf.Lerp(r.xMin, r.xMax, _saturation);
+            float y = Mathf.Lerp(r.yMin, r.yMax, _value);
+
+            svIndicator.anchoredPosition = new Vector2(x, y) + indicatorOffset;
         }
     }
 }

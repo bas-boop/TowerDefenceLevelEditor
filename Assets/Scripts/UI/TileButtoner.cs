@@ -19,6 +19,7 @@ namespace UI
         [SerializeField] private Color tileColor;
         
         private readonly Dictionary<string, Button> _buttonCache = new ();
+        private string _buttonNameToEdit;
 
         public void AddNewButton()
         {
@@ -26,6 +27,18 @@ namespace UI
             tileColor = colorPicker.GetSelectedColor();
             
             CreateButton(tileName, tileColor);
+        }
+
+        public void EditButton()
+        {
+            tileColor = colorPicker.GetSelectedColor();
+            TileDataHolder.Instance.EditData(_buttonNameToEdit, tileColor);
+        }
+
+        public void SetButtonToEdit(string targetButton)
+        {
+            if (_buttonCache.ContainsKey(targetButton))
+                _buttonNameToEdit = targetButton;
         }
 
         public void AddSetupButtons(TileDatas data)

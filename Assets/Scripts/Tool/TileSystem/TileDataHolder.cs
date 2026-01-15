@@ -39,6 +39,24 @@ namespace Tool.TileSystem
             return true;
         }
 
+        public bool EditData(string targetName, Color targetColor)
+        {
+            TileData existingTileData = GetData(targetName);
+
+            if (existingTileData == null)
+            {
+                Debug.LogWarning("Tilename is not in use");
+                return false;
+            }
+
+            existingTileData.tileColor = targetColor;
+
+            ConvertData();
+            fileEditor.SaveTileDatas(_tileDatas);
+
+            return true;
+        }
+
         public TileData GetData(string targetName)
         {
             return tilesDatas.FirstOrDefault(tileData => tileData.tileName == targetName);
